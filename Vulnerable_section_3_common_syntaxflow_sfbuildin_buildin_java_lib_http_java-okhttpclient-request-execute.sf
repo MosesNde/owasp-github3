@@ -1,0 +1,16 @@
+     lib: "java-okhttpclient-request-execute",
+ )
+ 
+Request?{<fullTypeName>?{have: 'okhttp3.'}}.Builder()...url(,* as $output);
+ alert $output;
+ 
+ desc(
+ lang: java,
+ 'file://a.java': <<<CODE
+ import okhttp3.OkHttpClient;
+ import okhttp3.Request;
+     }
+ }
+ CODE,
+ )
+\ No newline at end of file
