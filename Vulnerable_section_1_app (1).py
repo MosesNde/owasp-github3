@@ -1,25 +1,16 @@
-from flask import Flask, render_template, session
- from accountroutes import account_blueprint
- from authroutes import auth_blueprint
- from accountservice import AccountService
- from flask_cors import CORS
+ import cv  # Import the CV module
+ import cover_letter  # Import the cover letter module
  
- app = Flask(__name__)
+ @st.cache_data
+ def load_data():
+     return pd.read_csv("vgsales.csv")
  
-app.config['SECRET_KEY'] = 'x162klqzp23p01nIug'
+ # Load dataset
+ df = load_data()
  
- accservice = AccountService()
- 
- @app.route('/')
- def index():
-     customer_data = None
-     try:
-         if 'username' in session:
-             customer_data = accservice.getAccounts(session['customer_id'])
-     except Exception as e:
-        print(e)
-     return render_template('index.html', title="Homepage", session=session, customer=customer_data)
- 
- app.register_blueprint(account_blueprint)
- app.register_blueprint(auth_blueprint)
- 
+# Set wide mode
+st.set_page_config(layout="wide")
+
+ # Streamlit Sidebar
+ st.sidebar.title("📊 Video Game Sales Dashboard")
+ page = st.sidebar.radio("Select Analysis", ["Dashboard",  "CV", "Cover Letter"])
